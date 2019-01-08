@@ -1,6 +1,7 @@
 package io.agileintelligence.ppmtool.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,7 +12,8 @@ import java.util.Date;
 public class Project {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "project_sequence")
+    @SequenceGenerator(name="project_sequence", sequenceName = "PROJECT_SEQ", initialValue = 1, allocationSize = 1)
     private Long id;
 
     @NotBlank (message="Project name is required")
@@ -33,6 +35,18 @@ public class Project {
     private Date createdAt;
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedAt;
+
+    @OneToOne(fetch=FetchType.EAGER, cascade = CascadeType.ALL, mappedBy="project")
+    @JsonIgnore
+    private Backlog backlog;
+
+    public Backlog getBacklog() {
+        return backlog;
+    }
+
+    public void setBacklog(Backlog backlog) {
+        this.backlog = backlog;
+    }
 
     public Project(){}
 
