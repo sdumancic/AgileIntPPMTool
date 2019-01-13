@@ -1,5 +1,4 @@
 import { GET_PROJECTS, GET_PROJECT, DELETE_PROJECT } from "../actions/types";
-import { bindActionCreators } from "../../../../../../Users/sdumancic/AppData/Local/Microsoft/TypeScript/3.2/node_modules/redux";
 
 const initialState = {
     projects: [],
